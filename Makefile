@@ -1,9 +1,12 @@
 
-BLPAPI=blpapi_cpp_3.8.1.1
-CCFLAGS=-I. -I./$(BLPAPI)/include -L./$(BLPAPI)/Darwin
+
+BLPAPI=/usr/local/lib/blpapi_cpp_3.8.1.1
+CCFLAGS=-I. -I$(BLPAPI)/include
+LIBS=-L$(BLPAPI)/Darwin -lblpapi3_64
 
 all:
-	g++ blpapi_test.m.cpp -o blpapi_test.exe $(CCFLAGS) -lblpapi3_64
+	g++ blpapi_test.m.cpp -o blpapi_test.exe $(CCFLAGS) $(LIBS)
 
 clean:
-	rm -rf *.o
+	rm -rf *.o *.exe
+

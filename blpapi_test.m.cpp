@@ -29,7 +29,7 @@ class ToriaTest
 private:
   typedef std::map<std::string, std::string> FiltersMap;
 
-  std::string d_host;
+  std::string    d_host;
   int            d_port;
   Identity       d_identity;
   std::string    d_authOptions;
@@ -39,6 +39,13 @@ private:
   FiltersMap     d_filters;
   std::string    d_query;
   bool           d_partialMatch;
+
+  void initSessionOptions()
+  {
+    d_sessionOptions.setServerHost(d_host.c_str());
+    d_sessionOptions.setServerPort(d_port);
+    d_sessionOptions.setAuthenticationOptions(d_authOptions.c_str());
+  }
 
   bool sendRequest(Session* session)
   {
@@ -54,16 +61,25 @@ private:
   }
 
 public:
-  ToriaTest() : d_host()
-	      , d_port()
-	      , d_maxResults()
-	      , d_requestType()
-	      , d_query()
-	      , d_partialMatch()
+  ToriaTest() : d_host("localhost")
+	      , d_port(8194)
+	      , d_maxResults(10)
+	      , d_requestType("instrumentListRequest")
+	      , d_query("IBM")
+	      , d_partialMatch(false)
   {}
 
   void run()
   {
+    initSessionOptions();
+    Session session(d_sessionOptions);
+
+    if (!session.start()) {
+      std::cout << "*** Failed to start session!" << std::endl;
+      return;
+    }
+
+    
   }
 
 };
@@ -73,9 +89,8 @@ int main()
 {
   std::cout << "Starting session" << std::endl;
   
-  ToriaTest session;
-  
-  session.run();
+  ToriaTest tt;
+  tt.run();
 
   std::cout << "Done" << std::endl;
   
