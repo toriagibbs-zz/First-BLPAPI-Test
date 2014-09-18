@@ -61,7 +61,7 @@ private:
   }
 
 public:
-  ToriaTest() : d_host("localhost")
+  ToriaTest() : d_host("10.8.8.1")
 	      , d_port(8194)
 	      , d_maxResults(10)
 	      , d_requestType("instrumentListRequest")
